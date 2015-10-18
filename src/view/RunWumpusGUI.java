@@ -10,8 +10,10 @@ package view;
  * @author Rick Mercer
  */
 import java.awt.BorderLayout;
+import java.awt.TextArea;
 
 import javax.swing.JFrame;
+import javax.swing.JTabbedPane;
 
 
 
@@ -30,19 +32,30 @@ public class RunWumpusGUI extends JFrame {
     window.setVisible(true);
   }
 
+  private JTabbedPane TabPanels;
   private ImageView imagePanel;
+  //private TextArea ;
+  
   private Game game;
 
   public RunWumpusGUI() {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setSize(500, 520);
     setLocation(100, 30);
+    
+    
+    
    // this.addKeyListener(new ArrowKeyListener());
+    
+    
+    
+    /*
     game = new Game(0, 0);
     imagePanel = new ImageView(game);
     add(imagePanel, BorderLayout.EAST);
     game.addObserver(imagePanel);
     this.setFocusable(true);
+    */
   }
   
   

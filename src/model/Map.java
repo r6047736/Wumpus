@@ -1,12 +1,22 @@
 package model;
 
-public class Map {
+import java.util.ArrayList;
+import java.util.Observer;
+
+import java.util.Observable;
+
+public class Map extends Observable{
+	
+	
 
 	 public static int TILE_SIZE = 50;
-	 public static int WIDTH =10;
-	 public static int HEIGHT =10;
+	 public static int WIDTH = 10;
+	 public static int HEIGHT  =10;
 	 
-	 private Room[][] rooms = new Room[10][10];  
+	 private Room[][] rooms = new Room[10][10]; 
+	 
+	 private int playerX;
+	 private int playerY;
 	 
 	 
 	 public static void main(String[] args){
@@ -113,6 +123,36 @@ public class Map {
 		 
 	 }
 	 
+	 public int playerMove(Direction d){
+		 rooms[playerX][playerY].exit();
+		 if(d == Direction.WEST)
+			 playerX=(playerX-1+10)%10;
+		 else if(d==Direction.EAST)
+			 playerX=(playerX+1)%10;
+		 else if(d==Direction.NORTH)
+			 playerY=(playerY+9)%10;
+		 else
+			 playerY=(playerY+1)%10;
+		 
+		 //0 is live
+		 //1 is death by Womp
+		 //2 is death by pit
+		 
+		 rooms[playerX][playerY].enter();
+		 
+		 if(rooms[playerX][playerY].getType() == Type.Pit)
+			 return 2;
+		 else if(rooms[playerX][playerY].getType() == Type.Wumpus)
+			 return 1;
+		 else 
+			 return 0;
+		 
+		 
+		
+		 
+	 }
+	 
+
 	
 	 
 	 

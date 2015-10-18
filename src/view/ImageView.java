@@ -50,24 +50,13 @@ public class ImageView extends JPanel implements Observer {
 
   @Override
   public void update(Observable observable, Object extraParameter) {
-    game = (Game) observable;
-    direction = (Direction) extraParameter;
+    //game = (Game) observable;
+    //direction = (Direction) extraParameter;
     
   
-    X = game.getPoint().x;
-    Y = game.getPoint().y;
-    drawBoardWithAnimation();
-  
-    // TODO: Replace repaint with a private method that starts a timer
-    // that calls an actionListener to repaint. At first it can be one call.
-    // Then have 25 ticks where X or Y is adjusted by + or - 2 pixels so the
-    // player looks like there is a 'walk' from room to room.
-    // See the short movie to understand the behavior better.
-    //
-    // Turn in only this file (ImageView.java).  Do not turn in the project
-    //
-    // repaint();
-    
+   // X = game.getPoint().x;
+    //Y = game.getPoint().y;
+    //drawBoardWithAnimation();
    
   }
   
@@ -81,7 +70,6 @@ public class ImageView extends JPanel implements Observer {
 			int y = game.getOldPoint().y;
 			if (counts<25){
 				counts++;
-				
 				if (direction==Direction.NORTH)
 					Y=y-(counts*2);
 				else if (direction==Direction.SOUTH)

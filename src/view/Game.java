@@ -11,17 +11,21 @@ import java.awt.Point;
 import java.util.Observable;
 
 import model.Direction;
+import model.Map;
 
-public class Game extends Observable {
-
+public class Game{
+  Map rooms = new Map();
   int currentRow, currentCol, oldRow, oldCol;
   public static int TILE_SIZE = 50;
-
   public Game(int row, int column) {
     currentRow = row;
     currentCol = column;
     oldRow = row;
     oldCol = column;
+    
+    rooms= new Map();
+    
+    
   } 
 
   public void movePlayer(Direction dir) {
@@ -35,8 +39,8 @@ public class Game extends Observable {
       currentRow++;
     if (dir == Direction.WEST)
       currentCol--;
-    setChanged();
-    notifyObservers(dir);
+   // setChanged();
+   // notifyObservers(dir);
   }
 
   public int getCurrentRow() {
