@@ -11,8 +11,9 @@ import java.awt.Point;
 import java.util.Observable;
 
 
+
 public class Game extends Observable{
-  private Map rooms = new Map();
+  private Map rooms ;
   public static int TILE_SIZE = 50;
   private String status = "";
   
@@ -30,6 +31,7 @@ public class Game extends Observable{
   
   public Game(int playerX, int playerY) {
 		//rooms= new Map(preMap);
+	  rooms = new Map();
 	    getRooms().setPlayerPosition(playerX,playerY);
 	    getRooms().generateRandomPitsAndWumpus();
 	    getRooms().gemerateSlimeandBloods();
@@ -50,7 +52,7 @@ public class Game extends Observable{
 	 //4 is slime
 	 //5 is goop
   
-  
+
 
   public void movePlayer(Direction dir) {
 	  int status = getRooms().playerMove(dir);
@@ -70,6 +72,7 @@ public class Game extends Observable{
     		this.status  = "You step in goop. Danger surrounds you!";
     	else
     		this.status  =  "Nothing to see here hunter...";
+
     		
     	setChanged();
 	    notifyObservers();

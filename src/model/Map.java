@@ -13,7 +13,7 @@ public class Map {
 	 public static int WIDTH = 10;
 	 public static int HEIGHT  =10;
 	 
-	 private Room[][] rooms; 
+	 private Room[][] rooms = new Room[10][10]; 
 	 
 	 private int playerX;
 	 private int playerY;
@@ -34,7 +34,7 @@ public class Map {
 	 public Map(){
 		 for (int i=0; i<10;i++){
 			 for (int j=0; j<10;j++){
-				 rooms[i][j] = new Room(Type.Nothing);
+				 rooms[j][i] = new Room(Type.Nothing);
 			 } 
 			 
 		 }
