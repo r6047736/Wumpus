@@ -28,10 +28,8 @@ public class Room {
 		return type;
 	}
 
-	public void setType(Type fillHelper) {
-		// TODO Auto-generated method stub
-		
-		
+	public void setType(Type type) {
+		this.type = type;
 		
 	}
 	
@@ -54,6 +52,10 @@ public class Room {
 			
 		}
 		
+	}
+
+	public void reveal() {
+		isVisible = true;
 	}
 
 	

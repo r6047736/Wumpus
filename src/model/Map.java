@@ -13,10 +13,13 @@ public class Map {
 	 public static int WIDTH = 10;
 	 public static int HEIGHT  =10;
 	 
-	 private Room[][] rooms = new Room[10][10]; 
+	 private Room[][] rooms; 
 	 
 	 private int playerX;
 	 private int playerY;
+	 
+	 private int playerXOld;
+	 private int playerYOld;
 	 
 	 
 	 public static void main(String[] args){
@@ -38,10 +41,16 @@ public class Map {
 		 
 	 }
 	 
+	 public void insertHunter(int X, int Y){
+		 playerX = X;
+		 playerY = Y;
+		 rooms[playerX][playerY].enter();
+	 }
+	 
 	 
 	 //uses pre-rendered map
 	 public Map(int preMap) {
-		 if(preMap == 1)
+		 if(preMap == 2)
 			 rooms = WumpusOnEdge();
 		 else if(preMap == 1)
 			rooms = WumpusOnly();
@@ -72,39 +81,39 @@ public class Map {
 
 
 	private Room[][] WumpusAndPit() {
-		Room[][] wumPits = new Room[WIDTH][HEIGHT];
+		rooms = new Room[WIDTH][HEIGHT];
 		for(int i = 0; i< WIDTH; i++){
 			for(int j = 0; j< HEIGHT; j++){
 				if(i==4 && j==4)
-					wumPits[i][j] = new Room(Type.Wumpus);
+					rooms[i][j] = new Room(Type.Wumpus);
 				else if(i==j)
-					wumPits[i][j] = new Room(Type.Pit);
+					rooms[i][j] = new Room(Type.Pit);
 				else
-					wumPits[i][j] = new Room(Type.Nothing);					
+					rooms[i][j] = new Room(Type.Nothing);					
 			}
 		}
 		
 		this.gemerateSlimeandBloods();
 		
-		return wumPits;
+		return rooms;
 	}
 
 
 
 	private Room[][] WumpusOnly() {
-		Room[][] wumpusRooms = new Room[WIDTH][HEIGHT];
+		rooms = new Room[WIDTH][HEIGHT];
 		for(int i = 0; i< WIDTH; i++){
 			for(int j = 0; j< HEIGHT; j++){
 				if(i==4 && j==4)
-					wumpusRooms[i][j] = new Room(Type.Wumpus);
+					rooms[i][j] = new Room(Type.Wumpus);
 				else
-					wumpusRooms[i][j] = new Room(Type.Nothing);					
+					rooms[i][j] = new Room(Type.Nothing);					
 			}
 		}
 		
 		this.gemerateSlimeandBloods();
 		
-		return wumpusRooms;
+		return rooms;
 	}
 
 
@@ -141,7 +150,7 @@ public class Map {
 				 if(rooms[i][j].getType() == Type.Wumpus){
 					 fill(Type.Wumpus,i,j);
 				 }
-				 if(rooms[i][j].getType() == Type.Pit){
+				 else if(rooms[i][j].getType() == Type.Pit){
 					fill(Type.Pit, i, j);	
 				 }
 			 }
@@ -186,7 +195,12 @@ public class Map {
 		 String s = "";
 		 for (int i =0; i< 10; i++){
 			 for (int j=0; j<10;j++){
-				 s+= "["+rooms[j][i].getType().getChar()+"]";
+				 if(playerX == i && playerY == j)
+					 s+= "[O]";
+				 else if(!rooms[i][j].isVisible)
+					 s+= "[X]";
+				 else
+					 s+= "["+rooms[j][i].getType().getChar()+"]";
 				 
 			 }
 			 s+="\n";
@@ -220,14 +234,20 @@ public class Map {
 	 
 	 public int playerMove(Direction d){
 		 rooms[playerX][playerY].exit();
-		 if(d == Direction.WEST)
+		 playerXOld = playerX;
+		 playerYOld = playerY;
+		 if(d == Direction.WEST){
 			 playerX=(playerX-1+10)%10;
-		 else if(d==Direction.EAST)
+		 }
+		 else if(d==Direction.EAST){
 			 playerX=(playerX+1)%10;
-		 else if(d==Direction.NORTH)
+		 }
+		 else if(d==Direction.NORTH){
 			 playerY=(playerY+9)%10;
-		 else
+		 }
+		 else{
 			 playerY=(playerY+1)%10;
+		 }
 		 
 		 //0 is nothing
 		 //1 is death by Womp
@@ -260,6 +280,36 @@ public class Map {
 	public void setPlayerPosition(int playerX2, int playerY2) {
 		playerX = playerX2;
 		playerY = playerY2;
+	}
+
+	//reveals all
+	public void die() {
+		for(int i = 0; i< WIDTH; i++){
+			for(int j = 0; j< HEIGHT; j++){
+				rooms[i][j].reveal();
+			}
+		}
+		
+	}
+
+
+	public int getPlayerX() {
+		return playerX;
+	}
+
+
+	public int getPlayerY() {
+		return playerY;
+	}
+
+
+	public int getPlayerXOld() {
+		return playerXOld;
+	}
+
+
+	public int getPlayerYOld() {
+		return playerYOld;
 	}
 	 
 	
