@@ -15,6 +15,8 @@ import java.awt.TextArea;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
+import model.Game;
+
 
 
 /*

@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import model.Direction;
+import model.Game;
 
 public class ImageView extends JPanel implements Observer {
 
