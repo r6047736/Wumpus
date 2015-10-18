@@ -1,5 +1,6 @@
 package model;
-
+ //Kenneth Allison made a change here
+//and put a comment at the start of the file
 public class Room {
 
 	Type type;
