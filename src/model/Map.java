@@ -1,6 +1,4 @@
 package model;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
 
 public class Map {
 

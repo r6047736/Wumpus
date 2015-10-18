@@ -1,37 +1,57 @@
 package view;
 
-import java.util.Random;
 
-public class Game {
-    private Random r;
-    public Game(Random r) {
-        this.r = r;
-    }
+/**
+ * This Observable will notify any observers whenever 
+ * someone sends this Game a movePlayer message.
+ * 
+ * @author Rick Mercer
+ */
+import java.awt.Point;
+import java.util.Observable;
 
-    public int getNextBoardChar() {
-        return 'a' + r.nextInt(26);
-    }
+import model.Direction;
 
-}
+public class Game extends Observable {
 
-public class GameGUI extends JFrame{
-	public static void main(String[] args) {
-		(new GameGUI(new Random())).setVisible(true);
-	}
-	private JLabel theChar;
-	private Game game;
-	public GameGUI() {
-		this.setSize(500, 500);
-		// Other normal GUI stuff
-		this.theChar = new JLabel();
-		this.add(theChar);
-		game = new Game();
-		Timer t = new Timer(500, new ActionListener() {
-			public void ActionPerformed(ActionEvent e) {
-				theChar.setText(game.getNextBoardChar() + "");
-			}
-		});
-		t.start();
-	}
+  int currentRow, currentCol, oldRow, oldCol;
+  public static int TILE_SIZE = 50;
 
+  public Game(int row, int column) {
+    currentRow = row;
+    currentCol = column;
+    oldRow = row;
+    oldCol = column;
+  } 
+
+  public void movePlayer(Direction dir) {
+    oldRow = currentRow;
+    oldCol = currentCol;
+    if (dir == Direction.NORTH)
+      currentRow--;
+    if (dir == Direction.EAST)
+      currentCol++;
+    if (dir == Direction.SOUTH)
+      currentRow++;
+    if (dir == Direction.WEST)
+      currentCol--;
+    setChanged();
+    notifyObservers(dir);
+  }
+
+  public int getCurrentRow() {
+    return currentRow;
+  }
+
+  public int getCurrentColumn() {
+    return currentCol;
+  }
+
+  public Point getOldPoint() {
+    return new Point(oldCol * TILE_SIZE, oldRow * TILE_SIZE);
+  }
+
+  public Point getPoint() {
+    return new Point(currentCol * TILE_SIZE, currentRow * TILE_SIZE);
+  }
 }
