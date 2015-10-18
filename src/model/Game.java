@@ -11,16 +11,15 @@ import java.awt.Point;
 import java.util.Observable;
 
 public class Game{
-  Map rooms = new Map();
+  Map rooms;
   public static int TILE_SIZE = 50;
+  
   public Game(int playerX, int playerY, int preMap) {
+	  //0 is wumpus&pit
+	  //1 is wumpus in center
+	  //2 is wumpus top left, with pit below and to right
 	rooms= new Map(preMap);
     rooms.setPlayerPosition(playerX,playerY);
-    
-    
-    
-    
-    
   } 
 
   
@@ -34,10 +33,16 @@ public class Game{
   
   public String movePlayer(Direction dir) {
 	  int status = rooms.playerMove(dir);
-    	if(status==1)
+    	if(status==1){
+    		die();
     		return "You have been eaten by the terrible Wumpus!!!";
-    	else if(status==2)
+    		
+    	}
+    	else if(status==2){
+    		die();
     		return "You have fallen into a pit and died!!!";
+    		
+    	}
     	else if(status==3)
     		return "You step in blood. The Wumpus is nearby...";
     	else if(status==4)
@@ -49,5 +54,31 @@ public class Game{
     		
 
   }
+
+
+  //reveals whole map, other events on death
+	private void die() {
+		rooms.die();		
+	}
+	
+	public int getPointX(){
+		return rooms.getPlayerX();
+	}
+	
+	public int getPointY(){
+		return rooms.getPlayerY();
+	}
+	
+	public int getOldPointX(){
+		return rooms.getPlayerXOld();
+	}
+	
+	public int getOldPointY(){
+		return rooms.getPlayerYOld();
+	}
+	
+	public String toString(){
+		return rooms.toString();
+	}
 
 }

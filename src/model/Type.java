@@ -11,8 +11,8 @@ public enum Type {
 	}
 	public String getString(){
 		switch (index){
-			case 1:
-				return "Hidden Room";
+			//case 1:
+			//	return "Hidden Room";
 			
 			case 2:
 				return "Slime";
