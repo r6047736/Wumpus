@@ -8,12 +8,12 @@ package view;
  * @author Rick Mercer
  */
 import java.awt.Point;
-import java.util.Observable;
+
 
 import model.Direction;
 import model.Map;
 
-public class Game{
+public class Game {
   Map rooms = new Map();
   int currentRow, currentCol, oldRow, oldCol;
   public static int TILE_SIZE = 50;
@@ -24,7 +24,8 @@ public class Game{
     oldCol = column;
     
     rooms= new Map();
-    
+    rooms.generateRandomPitsAndWumpus();
+    rooms.gemerateSlimeandBloods();
     
   } 
 
