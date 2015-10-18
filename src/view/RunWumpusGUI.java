@@ -12,11 +12,16 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
+
+import model.Direction;
+import model.Game;
 
 
 
@@ -130,10 +135,39 @@ public class RunWumpusGUI extends JFrame {
     add(TabPanels);
     
     //Add observer
-    game.rooms.addObserver(imageview);
-    game.rooms.addObserver(textview);
+    game.addObserver(imageview);
+    game.addObserver(textview);
    
+    moveN.addActionListener(new ActionListener(){
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			game.movePlayer(Direction.NORTH);
+		}
+    });
     
+    moveS.addActionListener(new ActionListener(){
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			game.movePlayer(Direction.SOUTH);
+		}
+    });
+    
+    moveW.addActionListener(new ActionListener(){
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			game.movePlayer(Direction.WEST);
+		}
+    });
+    moveE.addActionListener(new ActionListener(){
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			game.movePlayer(Direction.EAST);
+		}
+    });
     
     
     

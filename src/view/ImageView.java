@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import model.Direction;
+import model.Game;
 
 public class ImageView extends JPanel implements Observer {
 
@@ -31,12 +32,11 @@ public class ImageView extends JPanel implements Observer {
 	  
     this.game = game; // Avoid null pointer when board is first drawn
     moving = false;
-    X = game.getPoint().x;
-    Y = game.getPoint().y;
+    X = 1;
+    Y = 1;
     try {
-    	 tile = ImageIO.read(new File("./images/Ground.png"));
+    	tile = ImageIO.read(new File("./images/Ground.png"));
       player = ImageIO.read(new File("./images/TheHunter.png"));
-     
       blood = ImageIO.read(new File("./images/Blood.png"));
       goop = ImageIO.read(new File("./images/Goop.png"));
       slime = ImageIO.read(new File("./images/Slime.png"));
@@ -52,7 +52,7 @@ public class ImageView extends JPanel implements Observer {
   public void update(Observable observable, Object extraParameter) {
     //game = (Game) observable;
     //direction = (Direction) extraParameter;
-    
+    System.out.println("123");
   
    // X = game.getPoint().x;
     //Y = game.getPoint().y;
@@ -66,8 +66,8 @@ public class ImageView extends JPanel implements Observer {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			// TODO Auto-generated method stub
-			int x = game.getOldPoint().x;
-			int y = game.getOldPoint().y;
+			int x = 1;
+			int y = 1;
 			if (counts<25){
 				counts++;
 				if (direction==Direction.NORTH)
