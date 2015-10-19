@@ -1,17 +1,14 @@
 package view;
 
 /**
- * Start an event-driven GUI with a player on a board in the upper left corner.
- * This JFrame has a key listener that sends movePlayer message to the game
- * when the user presses one of the four arrow keys. At that time, the Game,
- * which is also an Observable, sends a notifyObserver message to its one
- * Observer, which is also a JPanel that repaints the game board.
+ * The Main GUI, here set ever buttons needed, and actionlisteners to listen the actions.
+ * game observable have two observers. a textview and  graphic view. 
+ * set all layout
  * 
- * @author Rick Mercer
+ * 
+ * @author Haodong Ruan, Kenneth Allison
  */
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.TextArea;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -22,7 +19,7 @@ import javax.swing.JTabbedPane;
 
 import model.Direction;
 import model.Game;
-import model.Type;
+
 
 
 
@@ -134,14 +131,10 @@ public class RunWumpusGUI extends JFrame {
     moveE.setLocation(130,230);
     moveE.setSize(50,50);
     add(moveE);
-    /*
-    winlabel = new JLabel("");
-    winlabel.setSize(200, 50);
-    winlabel.setLocation(20,200);
-    */
+
     //-------- right Part
     
-    TabPanels.add("Grafical view", imageview);
+    TabPanels.add("Graphcal view", imageview);
     TabPanels.add("Text view", textview);
     TabPanels.setSize(520, 550);
     TabPanels.setLocation(200,0);
