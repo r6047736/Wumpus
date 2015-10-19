@@ -195,12 +195,12 @@ public class Map {
 			  
 				
 		}
-	 
+/*	 
 	 public String toString(){
 		 String s = "";
 		 for (int i =0; i< 10; i++){
 			 for (int j=0; j<10;j++){
-				 if(playerX == i && playerY == j)
+				 if(rooms[j][i].isOccupied())
 					 s+= "[O]";
 				 else if(!rooms[i][j].isVisible)
 					 s+= "[X]";
@@ -214,14 +214,15 @@ public class Map {
 		 return s;
 		 
 	 }
+	 */
 	 public String toStringInvisible(){
 		 String s = "";
 		 for (int i =0; i< 10; i++){
 			 for (int j=0; j<10;j++){
-				 if (playerX==j && playerY==i){
+				 if (rooms[j][i].isOccupied()){
 					 s+="[O]";
 				 }
-			 else if (rooms[j][i].isVisible){
+			 else if (rooms[j][i].getVisible()){
 				 s+= "["+rooms[j][i].getType().getChar()+"]";
 				 }
 				 else

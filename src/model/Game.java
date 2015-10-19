@@ -27,7 +27,7 @@ public class Game extends Observable{
 	  //1 is wumpus in center
 	  //2 is wumpus top left, with pit below and to right
 	rooms= new Map(preMap);
-    rooms.setPlayerPosition(playerX,playerY);
+    rooms.insertHunter(playerX,playerY);
 
   } 
   
@@ -172,7 +172,7 @@ public void setRooms(Map rooms) {
 	}
 	
 	public String toString(){
-		return rooms.toString();
+		return rooms.toStringInvisible();
 	}
 
 }
