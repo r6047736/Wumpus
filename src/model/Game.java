@@ -142,6 +142,14 @@ public class Game extends Observable{
 	  
   }
   
+  public boolean gameWin(){
+	  return win;
+  }
+  
+  public boolean gameEnd(){
+	  return end;
+  }
+  
   
   
   

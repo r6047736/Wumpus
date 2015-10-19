@@ -1,8 +1,11 @@
-package model;
+package Test;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+
+import model.Direction;
+import model.Game;
 
 public class GameTest {
 
@@ -110,5 +113,68 @@ public class GameTest {
 		first.movePlayer(Direction.NORTH);
 		assertEquals("You step in goop. Danger surrounds you!", first.getStatus());
 	}
+	
+	@Test
+	public void randomGameMaker() {
+		Game random = new Game(0,0);
+		random.movePlayer(Direction.SOUTH);
+		random.GamePlayable();
+		assertEquals(random.getPointX(), 0);
+		assertEquals(random.getPointY(), 1);
+		assertEquals(random.getOldPointX(), 0);
+		assertEquals(random.getOldPointX(), 0);
+	}
+	
+	@Test
+	public void shootAndHit1() {
+		Game first = new Game(4,0,0);
+		first.shootWumpus(Direction.SOUTH);
+		assertTrue(first.gameWin());
+	}
+	
+	@Test
+	public void shootAndHit2() {
+		Game first = new Game(4,0,0);
+		first.shootWumpus(Direction.NORTH);
+		assertTrue(first.gameWin());
+	}
+	
+	@Test
+	public void shootAndMiss1() {
+		Game first = new Game(4,0,0);
+		first.shootWumpus(Direction.WEST);
+		assertFalse(first.gameWin());
+		assertTrue(first.gameEnd());		
+	}
+	
+	@Test
+	public void shootAndMiss2() {
+		Game first = new Game(4,0,0);
+		first.shootWumpus(Direction.EAST);
+		assertFalse(first.gameWin());
+		assertTrue(first.gameEnd());		
+	}
+	
+	@Test
+	public void walkOverEdge() {
+		Game first = new Game(0,0,1);
+		first.movePlayer(Direction.NORTH);
+		first.movePlayer(Direction.EAST);
+		assertEquals(first.getPointX(), 0);
+		assertEquals(first.getPointY(), 9);
+	
+	}
+	
+	@Test
+	public void wumpusEdge() {
+		Game first = new Game(0,0,2);
+		first.movePlayer(Direction.NORTH);
+		first.movePlayer(Direction.EAST);
+		assertEquals(first.getPointX(), 0);
+		assertEquals(first.getPointY(), 9);
+	
+	}
+	
+	
 		
 }
