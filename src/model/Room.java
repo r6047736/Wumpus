@@ -64,6 +64,10 @@ public class Room {
 		isVisible = true;
 	}
 
+	public boolean isOccupied() {
+		return isOccupied;
+	}
+
 	
 	
 }
