@@ -2,10 +2,10 @@ package model;
 
 
 /**
- * This Observable will notify any observers whenever 
- * someone sends this Game a movePlayer message.
+ * This Observable will notify any move or shoot to the observer.
+ * .
  * 
- * @author Rick Mercer
+ * @author Haodong Ruan, Kenneth Allison
  */
 import java.awt.Point;
 import java.util.Observable;
@@ -19,6 +19,7 @@ public class Game extends Observable{
   private String status = "";
   private boolean playable = true;   // if can click the move button. (avoid press mutiple times when anmation)
   private boolean end = false;  // if die, game ends.
+  private boolean win = false;
   
 
   
@@ -68,11 +69,11 @@ public class Game extends Observable{
 	  int status = getMap().playerMove(dir);
     	if(status==1){
     		die();
-    		this.status =  "You have been eaten by the terrible Wumpus!!!";
+    		this.status =  "You have been eaten by the terrible Wumpus!!! (LOSE)";
     	}
     	else if(status==2){
     		die();
-    		this.status  = "You have fallen into a pit and died!!!";
+    		this.status  = "You have fallen into a pit and died!!! (LOSE)";
     	}
     	else if(status==3)
     		this.status  = "You step in blood. The Wumpus is nearby...";
@@ -88,37 +89,50 @@ public class Game extends Observable{
 	    notifyObservers(dir);
   }
   
-  public boolean shootWumpus(Direction dir){
+  public void shootWumpus(Direction dir){
 	  
 	  switch (dir){
 	  case NORTH:
 	  case SOUTH:
 		  for (int i =0 ; i< 10; i++){
-			  System.out.println(rooms.getRooms()[getPointX()][i].type);
+			//  System.out.println(rooms.getRooms()[getPointX()][i].type);
 			  if (rooms.getRooms()[getPointX()][i].type==Type.Wumpus){
-				  rooms.die();
-				  setChanged();
-				  notifyObservers();
-				  return true;
+				  this.status ="You shoot the Wumpus! You Win!!!!!! \n(WIN)";
+				  win = true;
+				  end =true;
+				 break;
+				 // return true;
 				  
 			  }
+			  rooms.die();
+			  end = true;
+			  this.status ="You shoot a arrow, But you missed Wumpus! (LOSE)";
 		  }
+		  setChanged();
+		  notifyObservers();
 		 break;
 	  case WEST:
 	  case EAST:
 		  for (int i =0 ; i< 10; i++){
 			  if (rooms.getRooms()[i][getPointY()].type==Type.Wumpus){
-				  rooms.die();
-				  setChanged();
-				  notifyObservers();
-				  return true;  
+				  this.status ="You shoot the Wumpus! You Win!!!!!! \n(WIN)";
+				
+				  win= true;
+				  end = true;
+				  break;
+				  //return true;  
 			  }
-			  
+			  rooms.die();
+			  end = true;
+			
+			  this.status ="You shoot a arrow, But you missed Wumpus! (LOSE) ";
 		  }
+		  setChanged();
+		  notifyObservers();
 	  break;
 	  }
 	  
-	  return false;
+	//  return false;
 	  
 	  
   }
@@ -135,17 +149,10 @@ public class Game extends Observable{
 public String getStatus() {
 	return status;
 }
-
-
-
-
-
 public Map getMap() {
 	return rooms;
 }
-public void setRooms(Map rooms) {
-	this.rooms = rooms;
-}
+
 
 
   //reveals whole map, other events on death

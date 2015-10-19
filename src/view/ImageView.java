@@ -1,5 +1,10 @@
 package view;
-
+/**
+ * This Graphic view observer, when observable changes map information, it update the draw picture.
+ * .
+ * 
+ * @author Haodong Ruan, Kenneth Allison
+ */
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -13,13 +18,14 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.imageio.ImageIO;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import model.Direction;
 import model.Game;
 import model.Room;
-import model.Type;
+
 
 public class ImageView extends JPanel implements Observer {
 
@@ -31,11 +37,17 @@ public class ImageView extends JPanel implements Observer {
   Timer t;
   boolean moving ;
   
+  private JLabel label;
+  
 
   public ImageView(Game game) {
 	  this.setBackground(Color.BLACK);
-	 // this.setPreferredSize(new Dimension(500,500));
-	  this.setSize(600,600);
+	  this.setPreferredSize(new Dimension(500,500));
+	  label = new JLabel();
+	  label.setLocation(200,200);
+	  label.setForeground(Color.RED);
+	  add(label);
+	 // this.setSize(500,500);
     this.game = game; // Avoid null pointer when board is first drawn
     moving = false;
     X = game.getPointX()*50;
@@ -58,6 +70,7 @@ public class ImageView extends JPanel implements Observer {
   public void update(Observable observable, Object extraParameter) {
     game = (Game) observable;
     direction = (Direction) extraParameter;
+    label.setText(game.getStatus());
    // System.out.println("123");
   
 	  X = game.getPointX()*50;
@@ -101,13 +114,7 @@ public class ImageView extends JPanel implements Observer {
 	 }
   
   private void drawBoardWithAnimation() { 
-    // TODO Set up a timer, add an ActionListener that calls repaint() 25 times
-    // in some number of milliseconds  (40ms is good).  Calling repaint() will
-    // execute the code in public void paintComponent(Graphics g).  The player
-    // should appear to move into the next room, not be transported immediately.
-    //
-    // Optional: Make it so the player wraps around, something you'll need in the project.
-    //
+    
 	  if (!moving){
 	  Timer t = new Timer(40,new Tlistener());
 	  t.start();
@@ -121,23 +128,13 @@ public class ImageView extends JPanel implements Observer {
 	
 	
 	  
-	 //repaint(); 
-     // temporary location to jump instantly to the next room.
+	
   }
 
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
     Graphics2D g2 = (Graphics2D) g;
 
-    // Draw background image 100 times
-    /*
-    for (int r = 0; r < 500; r += 50)
-      for (int c = 0; c < 500; c += 50)
-        g2.drawImage(tile, r, c, null);
-
-    System.out.println(X + " " + Y);
-    g2.drawImage(player, X, Y, null);
-    */
    
     for(int i = 0; i< 10;i++){
     	for (int j=0; j< 10; j++){

@@ -1,10 +1,7 @@
 package model;
-
 import java.util.ArrayList;
 import java.util.Observer;
-
 import java.util.Observable;
-
 public class Map {
 	
 	
@@ -125,14 +122,14 @@ public class Map {
 	public void generateRandomPitsAndWumpus(){
 		 //Pits;
 		 int pistNum = (int) (Math.random() * 2) + 3;
-		 System.out.println("pits numer = "+pistNum);
+		// System.out.println("pits numer = "+pistNum);
 		 
 		 for (int i=0;i<pistNum;i++){
 			 int x =  (int) (Math.random() * 9) ;
 			 int y = (int) (Math.random() * 9) ;
 			 
 			 rooms[y][x] = new Room(Type.Pit);
-			 System.out.println("pits = "+x+","+y);
+			// System.out.println("pits = "+x+","+y);
 			 //TODO late
 			 // xy same time?
 		 }
@@ -143,7 +140,7 @@ public class Map {
 		 int y = (int) (Math.random() * 9) ;
 		
 		 	rooms[y][x] = new Room(Type.Wumpus);
-		 	System.out.println("Wumpus = "+x+","+y);
+		 //	System.out.println("Wumpus = "+x+","+y);
 		//TODO late
 		// xy cover pit?
 		 

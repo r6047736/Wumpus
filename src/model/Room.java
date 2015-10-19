@@ -1,6 +1,7 @@
 package model;
- //Kenneth Allison made a change here
+//Kenneth Allison made a change here
 //and put a comment at the start of the file
+//Kenneth Allison
 public class Room {
 
 	Type type;
@@ -49,7 +50,7 @@ public class Room {
 		}
 		
 		else{
-			System.out.println("Speical case = "+ this.type +" vs "+newType);
+			//System.out.println("Speical case = "+ this.type +" vs "+newType);
 			
 		}
 		

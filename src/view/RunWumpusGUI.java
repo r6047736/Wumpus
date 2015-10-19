@@ -141,7 +141,7 @@ public class RunWumpusGUI extends JFrame {
     */
     //-------- right Part
     
-    TabPanels.add("Grafical view", imageview);
+    TabPanels.add("Graphcal view", imageview);
     TabPanels.add("Text view", textview);
     TabPanels.setSize(520, 550);
     TabPanels.setLocation(200,0);
