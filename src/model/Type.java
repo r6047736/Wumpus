@@ -9,6 +9,7 @@ public enum Type {
 		this.index = index;
 		
 	}
+	/*
 	public String getString(){
 		switch (index){
 			//case 1:
@@ -37,11 +38,10 @@ public enum Type {
 		
 		
 	}
+	*/
 	
 	public String getChar(){
 		switch (index){
-		case 1:
-			return "X";
 		
 		case 2:
 			return "S";
@@ -58,11 +58,8 @@ public enum Type {
 		case 6:
 			return "P";
 			
-		case 7:
-			return " ";
-	}
-	
-	return "Error ";
+		}
+		return " ";
 		
 	}
 	

@@ -143,9 +143,11 @@ public String getStatus() {
 public Map getMap() {
 	return rooms;
 }
+/*
 public void setRooms(Map rooms) {
 	this.rooms = rooms;
 }
+*/
 
 
   //reveals whole map, other events on death
