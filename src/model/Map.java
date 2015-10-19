@@ -18,8 +18,8 @@ public class Map {
 	 private int playerX;
 	 private int playerY;
 	 
-	 private int playerXOld;
-	 private int playerYOld;
+	 private int playerXOld ;
+	 private int playerYOld = 0;
 	 
 	 
 	 public static void main(String[] args){
@@ -32,6 +32,7 @@ public class Map {
 	 
 	 
 	 public Map(){
+		
 		 for (int i=0; i<10;i++){
 			 for (int j=0; j<10;j++){
 				 rooms[j][i] = new Room(Type.Nothing);
@@ -40,10 +41,14 @@ public class Map {
 		 }
 		 
 	 }
-	 
+	 public Room[][] getRooms(){
+		return rooms;
+		}
 	 public void insertHunter(int X, int Y){
 		 playerX = X;
 		 playerY = Y;
+		 playerXOld = X;
+		 playerYOld = Y;
 		 rooms[playerX][playerY].enter();
 	 }
 	 

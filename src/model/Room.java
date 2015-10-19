@@ -27,6 +27,7 @@ public class Room {
 	public Type getType(){
 		return type;
 	}
+	
 
 	public void setType(Type type) {
 		this.type = type;
@@ -51,6 +52,10 @@ public class Room {
 			System.out.println("Speical case = "+ this.type +" vs "+newType);
 			
 		}
+		
+	}
+	public boolean getVisible(){
+		return isVisible;
 		
 	}
 

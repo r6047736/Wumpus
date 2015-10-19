@@ -13,9 +13,12 @@ import java.util.Observable;
 
 
 public class Game extends Observable{
+	
   private Map rooms ;
   public static int TILE_SIZE = 50;
   private String status = "";
+  private boolean playable = true;   // if can click the move button. (avoid press mutiple times when anmation)
+  private boolean end = false;  // if die, game ends.
   
 
   
@@ -32,10 +35,12 @@ public class Game extends Observable{
   public Game(int playerX, int playerY) {
 		//rooms= new Map(preMap);
 	  rooms = new Map();
-	    getRooms().setPlayerPosition(playerX,playerY);
-	    getRooms().generateRandomPitsAndWumpus();
-	    getRooms().gemerateSlimeandBloods();
+	    rooms.setPlayerPosition(playerX,playerY);
+	    rooms.generateRandomPitsAndWumpus();
+	    rooms.gemerateSlimeandBloods();
 	    
+	    
+	  
 	  } 
 	  
   
@@ -55,7 +60,12 @@ public class Game extends Observable{
 
 
   public void movePlayer(Direction dir) {
-	  int status = getRooms().playerMove(dir);
+	  if (end || !playable){
+		  return ;
+		  
+	  }
+	  playable= false;
+	  int status = getMap().playerMove(dir);
     	if(status==1){
     		die();
     		this.status =  "You have been eaten by the terrible Wumpus!!!";
@@ -75,7 +85,47 @@ public class Game extends Observable{
 
     		
     	setChanged();
-	    notifyObservers();
+	    notifyObservers(dir);
+  }
+  
+  public boolean shootWumpus(Direction dir){
+	  
+	  switch (dir){
+	  case NORTH:
+	  case SOUTH:
+		  for (int i =0 ; i< 10; i++){
+			  System.out.println(rooms.getRooms()[getPointX()][i].type);
+			  if (rooms.getRooms()[getPointX()][i].type==Type.Wumpus){
+				  rooms.die();
+				  setChanged();
+				  notifyObservers();
+				  return true;
+				  
+			  }
+		  }
+		 break;
+	  case WEST:
+	  case EAST:
+		  for (int i =0 ; i< 10; i++){
+			  if (rooms.getRooms()[i][getPointY()].type==Type.Wumpus){
+				  rooms.die();
+				  setChanged();
+				  notifyObservers();
+				  return true;  
+			  }
+			  
+		  }
+	  break;
+	  }
+	  
+	  return false;
+	  
+	  
+  }
+  
+  public void GamePlayable(){
+	  playable = true;
+	  
   }
   
   
@@ -90,7 +140,7 @@ public String getStatus() {
 
 
 
-public Map getRooms() {
+public Map getMap() {
 	return rooms;
 }
 public void setRooms(Map rooms) {
@@ -100,7 +150,9 @@ public void setRooms(Map rooms) {
 
   //reveals whole map, other events on death
 	private void die() {
-		rooms.die();		
+		rooms.die();	
+		//playable = false;
+		end = true;
 	}
 	
 	public int getPointX(){

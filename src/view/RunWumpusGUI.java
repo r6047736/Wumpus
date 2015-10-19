@@ -22,6 +22,7 @@ import javax.swing.JTabbedPane;
 
 import model.Direction;
 import model.Game;
+import model.Type;
 
 
 
@@ -43,7 +44,7 @@ public class RunWumpusGUI extends JFrame {
   private JTabbedPane TabPanels;
   private ImageView imageview;
   private TextView textview;
-  
+  private  JLabel winlabel;
   private JButton shootN;
   private JButton shootS;
   private JButton shootW;
@@ -58,16 +59,27 @@ public class RunWumpusGUI extends JFrame {
 
   public RunWumpusGUI() {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setSize(700, 550);
-    setLocation(100, 30);
+    setSize(750, 600);
+    //setLocation(100, 30);
     
     setLayout(null);
     game = new Game(0,0);
+    
+    int x =  (int) (Math.random() * 9) ;
+    int y =  (int) (Math.random() * 9) ;
+    while (!game.getMap().getRooms()[x][y].getType().getChar().equals(" ")){
+    	x =  (int) (Math.random() * 9) ;
+    	y =  (int) (Math.random() * 9) ;
+    }
+    game.getMap().insertHunter(x, y);
+   
+  
+   // game.notifyObservers();
    
     
     TabPanels = new JTabbedPane();
     imageview = new ImageView(game);
-    textview = new TextView();
+    textview = new TextView(game);
     
     //----------JButton part
     
@@ -122,17 +134,20 @@ public class RunWumpusGUI extends JFrame {
     moveE.setLocation(130,230);
     moveE.setSize(50,50);
     add(moveE);
-    
-    
-    
-    
+    /*
+    winlabel = new JLabel("");
+    winlabel.setSize(200, 50);
+    winlabel.setLocation(20,200);
+    */
     //-------- right Part
     
     TabPanels.add("Grafical view", imageview);
     TabPanels.add("Text view", textview);
-    TabPanels.setSize(500, 500);
+    TabPanels.setSize(520, 550);
     TabPanels.setLocation(200,0);
     add(TabPanels);
+    
+    
     
     //Add observer
     game.addObserver(imageview);
@@ -169,19 +184,38 @@ public class RunWumpusGUI extends JFrame {
 		}
     });
     
+    //shootWumpus
     
+    shootN.addActionListener(new ActionListener(){
+  		@Override
+  		public void actionPerformed(ActionEvent e) {
+  			// TODO Auto-generated method stub
+  			game.shootWumpus(Direction.NORTH);
+  		}
+      });
+    shootS.addActionListener(new ActionListener(){
+  		@Override
+  		public void actionPerformed(ActionEvent e) {
+  			// TODO Auto-generated method stub
+  			game.shootWumpus(Direction.SOUTH);
+  		}
+      });
+    shootE.addActionListener(new ActionListener(){
+  		@Override
+  		public void actionPerformed(ActionEvent e) {
+  			// TODO Auto-generated method stub
+  			game.shootWumpus(Direction.EAST);
+  		}
+      });
+    shootW.addActionListener(new ActionListener(){
+  		@Override
+  		public void actionPerformed(ActionEvent e) {
+  			// TODO Auto-generated method stub
+  			game.shootWumpus(Direction.WEST);
+  		}
+      });
     
-   // this.addKeyListener(new ArrowKeyListener());
-    
-    
-    
-    /*
-    game = new Game(0, 0);
-    imagePanel = new ImageView(game);
-    add(imagePanel, BorderLayout.EAST);
-    game.addObserver(imagePanel);
-    this.setFocusable(true);
-    */
+   
   }
   
   

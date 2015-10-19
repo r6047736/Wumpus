@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -16,6 +18,8 @@ import javax.swing.Timer;
 
 import model.Direction;
 import model.Game;
+import model.Room;
+import model.Type;
 
 public class ImageView extends JPanel implements Observer {
 
@@ -29,11 +33,13 @@ public class ImageView extends JPanel implements Observer {
   
 
   public ImageView(Game game) {
-	  
+	  this.setBackground(Color.BLACK);
+	 // this.setPreferredSize(new Dimension(500,500));
+	  this.setSize(600,600);
     this.game = game; // Avoid null pointer when board is first drawn
     moving = false;
-    X = 1;
-    Y = 1;
+    X = game.getPointX()*50;
+    Y = game.getPointY()*50;
     try {
     	tile = ImageIO.read(new File("./images/Ground.png"));
       player = ImageIO.read(new File("./images/TheHunter.png"));
@@ -45,18 +51,18 @@ public class ImageView extends JPanel implements Observer {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    repaint();
+    //repaint();
   }
 
   @Override
   public void update(Observable observable, Object extraParameter) {
-    //game = (Game) observable;
-    //direction = (Direction) extraParameter;
-    System.out.println("123");
+    game = (Game) observable;
+    direction = (Direction) extraParameter;
+   // System.out.println("123");
   
-   // X = game.getPoint().x;
-    //Y = game.getPoint().y;
-    //drawBoardWithAnimation();
+	  X = game.getPointX()*50;
+	  Y = game.getPointY()*50;
+    drawBoardWithAnimation();
    
   }
   
@@ -65,19 +71,19 @@ public class ImageView extends JPanel implements Observer {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			int x = 1;
-			int y = 1;
+			
+			int x = game.getOldPointX()*50;
+			int y = game.getOldPointY()*50;
 			if (counts<25){
 				counts++;
 				if (direction==Direction.NORTH)
-					Y=y-(counts*2);
+					Y=(y-(counts*2)+500)%500;
 				else if (direction==Direction.SOUTH)
-					Y=y+(counts*2);
+					Y=(y+(counts*2)+500)%500;
 				else if (direction==Direction.WEST)
-					X=x-(counts*2);
+					X=(x-(counts*2)+500)%500;
 				else if (direction==Direction.EAST)
-					X=x+(counts*2);;
+					X=(x+(counts*2)+500)%500;
 			repaint();
 			
 			
@@ -86,6 +92,7 @@ public class ImageView extends JPanel implements Observer {
 				
 				counts = 0;
 				moving =false;
+				game.GamePlayable();
 				((Timer)e.getSource()).stop();
 			}
 		}
@@ -93,7 +100,7 @@ public class ImageView extends JPanel implements Observer {
 		 
 	 }
   
-  private void drawBoardWithAnimation() {
+  private void drawBoardWithAnimation() { 
     // TODO Set up a timer, add an ActionListener that calls repaint() 25 times
     // in some number of milliseconds  (40ms is good).  Calling repaint() will
     // execute the code in public void paintComponent(Graphics g).  The player
@@ -123,11 +130,46 @@ public class ImageView extends JPanel implements Observer {
     Graphics2D g2 = (Graphics2D) g;
 
     // Draw background image 100 times
+    /*
     for (int r = 0; r < 500; r += 50)
       for (int c = 0; c < 500; c += 50)
         g2.drawImage(tile, r, c, null);
 
     System.out.println(X + " " + Y);
+    g2.drawImage(player, X, Y, null);
+    */
+   
+    for(int i = 0; i< 10;i++){
+    	for (int j=0; j< 10; j++){
+    		Room  r= game.getMap().getRooms()[j][i];
+    		if (game.getMap().getRooms()[j][i].getVisible()){
+    				g2.drawImage(tile, j*50, i*50, null);
+    			switch (r.getType()){
+    			case Blood:
+    				 g2.drawImage(blood, j*50, i*50, null);
+    				break;
+    			case Slime:
+    				g2.drawImage(slime, j*50, i*50, null);
+    				break;
+    			case Pit:
+    				g2.drawImage(slimepit, j*50, i*50, null);
+    				break;
+    			case Goop:
+    				g2.drawImage(goop, j*50, i*50, null);
+    				break;
+    			case Wumpus:
+    				g2.drawImage(wumpus, j*50, i*50, null);
+    				break;
+				default:
+					
+					break;
+    			}
+    			
+    		}
+    		
+    	}
+    	
+    }
     g2.drawImage(player, X, Y, null);
   }
 
